@@ -1,0 +1,15 @@
+#--------------------------------------
+# Required packages to install via pip
+#--------------------------------------
+
+# Flask framework
+Flask
+
+# Turso API library
+libsql-client
+
+# Environment Variables
+python-dotenv
+
+# Coloured text
+colorama
