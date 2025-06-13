@@ -10,32 +10,81 @@
 
 {% block title %}
 
-    Flask Demo
+    Flask Demo TODO
 
 {% endblock %}
 
 
 {% block content %}
 
-    <h1>Flask Demo App with Turso DB and User Accounts</h1>
+<h1>Welcome to the epic and Awesome todo list</h1>
 
-    <p>This is a simple Flask app that connects to a Turso database to save and retrieve data, and also manage user accounts. This can be used as the basis of your web app.</p>
 
-    <p>It includes...</p>
 
-    <ul>
-        <li>Example routes</li>
-        <li>Example static pages</li>
-        <li>Missing page and server error pages</li>
-        <li>DB connection and error handling</li>
-        <li>Example CRUD actions: Create and Delete</li>
-        <li>User account creation</li>
-        <li>User login / logout</li>
-        <li>Adaption of menus / routes / content based on login status</li>
-        <li>Flash messages for information</li>
-    </ul>
+{% if session.user_id %}
 
-    <a href="/things" role="button">Go to the Things...</a>
+<article>
+
+        <ul>
+        
+        <h1>Tasks...</h1>
+
+            {% for task in tasks %}
+
+                <li>
+
+                    <p>{{ task.priority }}</p>
+
+                    <p>{{ task.name }}</p>
+
+                    <p>{{ task.timestamp }}</p>
+
+                    <p>[]</p>
+                    
+                </li>
+
+            {% else %}
+
+                <p>None!</p>
+
+            {% endfor %}
+        </ul>
+
+    </article>
+
+    <article>
+
+            <h3>Add a New Task to do</h3>
+
+            <form action="/add" method="POST">
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Name of new task"
+                    required
+                >
+
+                <input
+                    type="number"
+                    name="priority"
+                    min="0"
+                    max="5"
+                    placeholder="Priority(1-5)"
+                    required
+                >
+
+                <button>Add the Task</button>
+
+            </form>
+
+        </article>
+
+{% else %}
+
+Please <a href="/login">login</a> or <a href="/register">create an account</a> to continue
+
+{% endif%}
 
 {% endblock %}
 
