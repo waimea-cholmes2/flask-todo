@@ -27,19 +27,27 @@
 
         <ul>
         
-        <h1>Tasks...</h1>
+        <h1>To Do...</h1>
 
             {% for task in tasks %}
 
                 <li>
 
-                    <p>{{ task.priority }}</p>
+                    <p class="tasks">
+                    <span class="priority">{{task.priority}}</span>
+                    <span class="taskname">{{task.name}}</span>
+                    <span class="time">{{task.timestamp}}</span>
 
-                    <p>{{ task.name }}</p>
+                    {% if task.completed %}
 
-                    <p>{{ task.timestamp }}</p>
+                        <a href="/uncomplete/{{ task.id }}"onclick="return confirm('Are You Sure?');">[✓]</a>
 
-                    <p>[]</p>
+                    {% else %}
+
+                        <a href="/complete/{{ task.id }}"onclick="return confirm('Are You Sure?');">[ ]</a>
+
+                    {% endif %}
+                    </p>
                     
                 </li>
 

@@ -169,6 +169,49 @@ def delete_a_thing(id):
         # Go back to the home page
         flash("Thing deleted", "success")
         return redirect("/things")
+    
+
+
+#-----------------------------------------------------------
+# Route for completing a thing, Id given in the route
+# - Restricted to logged in users
+#-----------------------------------------------------------
+@app.get("/complete/<int:id>")
+@login_required
+def complete_a_thing(id):
+    # Get the user id from the session
+    user_id = session["user_id"]
+
+    with connect_db() as client:
+        # Delete the thing from the DB only if we own it
+        sql = "UPDATE tasks SET completed = 1 WHERE id=? AND user_id=?"
+        values = [id, user_id]
+        client.execute(sql, values)
+
+        # Go back to the home page
+        flash("Task completed", "success")
+        return redirect("/")
+    
+
+#-----------------------------------------------------------
+# Route for uncompleting a thing, Id given in the route
+# - Restricted to logged in users
+#-----------------------------------------------------------
+@app.get("/uncomplete/<int:id>")
+@login_required
+def uncomplete_a_thing(id):
+    # Get the user id from the session
+    user_id = session["user_id"]
+
+    with connect_db() as client:
+        # Delete the thing from the DB only if we own it
+        sql = "UPDATE tasks SET completed = 0 WHERE id=? AND user_id=?"
+        values = [id, user_id]
+        client.execute(sql, values)
+
+        # Go back to the home page
+        flash("Task uncompleted", "success")
+        return redirect("/")
 
 
 #-----------------------------------------------------------
